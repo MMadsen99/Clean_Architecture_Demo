@@ -1,4 +1,4 @@
-package View.com.example.cleanarchitecturedemo;
+package view.com.example.cleanarchitecturedemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,30 @@ import android.widget.TextView;
 
 import com.example.cleanarchitecturedemo.R;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+import model.Model;
+
+public class AndroidView extends AppCompatActivity {
+
+    private Model model = new Model();
+
+
+
+
+    private void observeModel(Model model) {
+        model.addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                if (o instanceof Model) {
+                    String data = ((Model) o).getData();
+                    TextView outputView = (TextView) findViewById(R.id.textView);
+                    outputView.setText(data);
+                }            }
+        });
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 saveText.setText(userinput.getText());
             }
         });
-    }
+
 }
+}
+
+
